@@ -18,3 +18,49 @@
 // </div>
 //
 // Use your function to create a card for each of the articles and add the card to the DOM.
+
+const ccontainer = document.querySelector('.cards-container');
+
+function cards(attr){
+    const {headline, authorPhoto, authorName} = attr
+
+    const cardtop = document.createElement('div');
+    const cardtitle = document.createElement('div');
+    const cardauthor = document.createElement('div');
+    const imgtop = document.createElement('div');
+    const aimg = document.createElement('img');
+    const aname = document.createElement('span');
+
+    cardtop.appendChild(cardtitle);
+    cardtop.appendChild(cardauthor);
+    cardauthor.appendChild(imgtop);
+    imgtop.appendChild(aimg);
+    cardauthor.appendChild(aname);
+
+    cardtop.classList.add('card');
+    cardtitle.classList.add('headline');
+    cardauthor.classList.add('author');
+    imgtop.classList.add('img-container');
+
+    cardtitle.textContent = headline;
+    aimg.src = authorPhoto;
+    aname.textContent = `By: ${authorName}`;
+
+    return cardtop;
+}
+
+function article(articles){
+    http.get ('https://lambda-times-backend.herokuapp.com/articles')
+        .then(response =>{
+            response.data.message.forEach(articles => {
+              const card = cards({headline: headline, authorPhoto: authorPhoto, authorName: authorName})
+              ccontainer.appendChild(card)
+            });
+        })
+        .catch(error => {
+            console.log('Failed to get articles')
+          })
+          .finally(() => {
+            console.log('done')
+          })
+}
